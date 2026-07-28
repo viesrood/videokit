@@ -11,7 +11,6 @@ use viesrood\videokit\base\ProviderException;
 use viesrood\videokit\base\ProviderInterface;
 use viesrood\videokit\helpers\VideoUrl;
 use viesrood\videokit\models\Collection;
-use viesrood\videokit\models\Video;
 use viesrood\videokit\Plugin;
 use yii\web\Response;
 
@@ -70,26 +69,15 @@ class VideosController extends Controller
         }
 
         try {
-            $video = $plugin->getVideos()->getVideo(
-                $parsed['provider'],
-                $parsed['videoId'],
-                $parsed['hash'],
-                $refresh,
-            );
+            // Falls back to the bare provider reference when there is no
+            // metadata, so the field still gets a usable value.
+            $video = $plugin->getVideos()->getVideoByUrl($url, $refresh);
         } catch (Throwable $e) {
             return $this->upstreamFailure($e, 'get-video');
         }
 
         if ($video === null) {
-            // The URL is valid but nothing came back: either the video is gone
-            // or no provider is configured to look it up. Hand back the bare
-            // reference so the field still holds a usable value.
-            $video = Video::fromArray([
-                'provider' => $parsed['provider'],
-                'videoId' => $parsed['videoId'],
-                'hash' => $parsed['hash'],
-                'url' => $url,
-            ]);
+            return $this->failure(Craft::t('videokit', 'That is not a YouTube or Vimeo video URL.'));
         }
 
         return $this->asJson(['success' => true, 'video' => $video->forJs()]);

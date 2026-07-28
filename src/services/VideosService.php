@@ -78,7 +78,13 @@ class VideosService extends Component
     }
 
     /**
-     * A video by URL. Returns null when the URL is not a recognised video URL.
+     * A video by URL. Returns null only when the URL is not a recognised video
+     * URL.
+     *
+     * When there is no metadata (no credential, or a lookup that failed), the
+     * bare provider reference is returned rather than null: provider and id are
+     * all an embed needs, so a template must not lose the video just because
+     * the title could not be fetched.
      */
     public function getVideoByUrl(string $url, bool $refresh = false): ?Video
     {
@@ -88,7 +94,18 @@ class VideosService extends Component
             return null;
         }
 
-        return $this->getVideo($parsed['provider'], $parsed['videoId'], $parsed['hash'], $refresh);
+        $video = $this->getVideo($parsed['provider'], $parsed['videoId'], $parsed['hash'], $refresh);
+
+        if ($video !== null) {
+            return $video;
+        }
+
+        return Video::fromArray([
+            'provider' => $parsed['provider'],
+            'videoId' => $parsed['videoId'],
+            'hash' => $parsed['hash'],
+            'url' => $url,
+        ]);
     }
 
     /**
