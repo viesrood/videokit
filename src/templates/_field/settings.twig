@@ -1,0 +1,27 @@
+{% import '_includes/forms.twig' as forms %}
+
+{{ forms.checkboxSelectField({
+    label: 'Allowed providers'|t('videokit'),
+    instructions: 'Leave every option unchecked to allow all configured providers.'|t('videokit'),
+    id: 'allowedProviders',
+    name: 'allowedProviders',
+    options: providerOptions,
+    values: field.allowedProviders,
+    errors: field.getErrors('allowedProviders'),
+}) }}
+
+{{ forms.lightswitchField({
+    label: 'Show the browse button'|t('videokit'),
+    instructions: 'Lets editors search and browse the configured accounts instead of only pasting a URL.'|t('videokit'),
+    id: 'showBrowser',
+    name: 'showBrowser',
+    on: field.showBrowser,
+}) }}
+
+{{ forms.lightswitchField({
+    label: 'Show a preview'|t('videokit'),
+    instructions: 'Shows the thumbnail, title and duration of the selected video.'|t('videokit'),
+    id: 'showPreview',
+    name: 'showPreview',
+    on: field.showPreview,
+}) }}

@@ -1,0 +1,160 @@
+{% import '_includes/forms.twig' as forms %}
+
+<p>
+    {{ 'Every setting below can also be set per environment in config/videokit.php. Credentials are only ever used server-side and never reach the browser.'|t('videokit') }}
+</p>
+
+<h2>{{ 'Credentials'|t('videokit') }}</h2>
+
+{{ forms.autosuggestField({
+    label: 'YouTube API key'|t('videokit'),
+    instructions: 'A YouTube Data API v3 key. Without it, YouTube URLs still work but titles and thumbnails stay empty.'|t('videokit'),
+    id: 'youtubeApiKey',
+    name: 'youtubeApiKey',
+    value: settings.youtubeApiKey,
+    suggestEnvVars: true,
+    errors: settings.getErrors('youtubeApiKey'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: 'YouTube channel ID'|t('videokit'),
+    instructions: 'The channel (UC...) whose uploads and playlists editors can browse. Leave empty to allow search only.'|t('videokit'),
+    id: 'youtubeChannelId',
+    name: 'youtubeChannelId',
+    value: settings.youtubeChannelId,
+    suggestEnvVars: true,
+    errors: settings.getErrors('youtubeChannelId'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: 'Vimeo access token'|t('videokit'),
+    instructions: 'A Vimeo personal access token. Keyword search additionally requires an approved Vimeo app; without one, browsing still works.'|t('videokit'),
+    id: 'vimeoAccessToken',
+    name: 'vimeoAccessToken',
+    value: settings.vimeoAccessToken,
+    suggestEnvVars: true,
+    errors: settings.getErrors('vimeoAccessToken'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: 'Vimeo user ID'|t('videokit'),
+    instructions: 'Whose videos editors can browse. Leave empty to use the account the token belongs to.'|t('videokit'),
+    id: 'vimeoUserId',
+    name: 'vimeoUserId',
+    value: settings.vimeoUserId,
+    suggestEnvVars: true,
+    errors: settings.getErrors('vimeoUserId'),
+}) }}
+
+<h2>{{ 'Browsing'|t('videokit') }}</h2>
+
+{{ forms.checkboxSelectField({
+    label: 'Enabled providers'|t('videokit'),
+    instructions: 'Leave every option unchecked to allow all configured providers.'|t('videokit'),
+    id: 'enabledProviders',
+    name: 'enabledProviders',
+    options: providers|map(p => { label: p.displayName(), value: p.handle() })|values,
+    values: settings.enabledProviders,
+    errors: settings.getErrors('enabledProviders'),
+}) }}
+
+{{ forms.textField({
+    label: 'Videos per page'|t('videokit'),
+    instructions: 'How many results the browse modal loads at a time.'|t('videokit'),
+    id: 'videosPerPage',
+    name: 'videosPerPage',
+    type: 'number',
+    min: 1,
+    max: 50,
+    size: 5,
+    value: settings.videosPerPage,
+    errors: settings.getErrors('videosPerPage'),
+}) }}
+
+<h2>{{ 'Caching'|t('videokit') }}</h2>
+
+{{ forms.textField({
+    label: 'API response cache'|t('videokit'),
+    instructions: 'Seconds to cache provider API responses. Keep this above zero: a YouTube search costs 100 of the 10,000 daily quota units. Set to 0 to disable caching.'|t('videokit'),
+    id: 'cacheDuration',
+    name: 'cacheDuration',
+    type: 'number',
+    min: 0,
+    size: 8,
+    value: settings.cacheDuration,
+    errors: settings.getErrors('cacheDuration'),
+}) }}
+
+{{ forms.textField({
+    label: 'Metadata lifetime'|t('videokit'),
+    instructions: 'Seconds before stored titles and thumbnails are fetched again while a page renders. 0 (recommended) keeps metadata until you refresh it from the VideoKit utility, so no visitor ever waits on a provider API.'|t('videokit'),
+    id: 'metadataTtl',
+    name: 'metadataTtl',
+    type: 'number',
+    min: 0,
+    size: 8,
+    value: settings.metadataTtl,
+    errors: settings.getErrors('metadataTtl'),
+}) }}
+
+{{ forms.textField({
+    label: 'Request timeout'|t('videokit'),
+    instructions: 'Seconds to wait for a provider API.'|t('videokit'),
+    id: 'timeout',
+    name: 'timeout',
+    type: 'number',
+    min: 1,
+    max: 120,
+    size: 5,
+    value: settings.timeout,
+    errors: settings.getErrors('timeout'),
+}) }}
+
+<h2>{{ 'Privacy and embedding'|t('videokit') }}</h2>
+
+{{ forms.lightswitchField({
+    label: 'Use youtube-nocookie.com'|t('videokit'),
+    instructions: 'Embeds YouTube through its no-cookie host.'|t('videokit'),
+    id: 'youtubeNoCookie',
+    name: 'youtubeNoCookie',
+    on: settings.youtubeNoCookie,
+}) }}
+
+{{ forms.lightswitchField({
+    label: 'Ask Vimeo not to track'|t('videokit'),
+    instructions: 'Adds dnt=1 to the Vimeo player URL.'|t('videokit'),
+    id: 'vimeoDoNotTrack',
+    name: 'vimeoDoNotTrack',
+    on: settings.vimeoDoNotTrack,
+}) }}
+
+{{ forms.lightswitchField({
+    label: 'Register the facade assets'|t('videokit'),
+    instructions: 'Loads the bundled click-to-load script and stylesheet when videokit_facade() is used. Turn this off if you ship your own copy.'|t('videokit'),
+    id: 'registerFacadeAssets',
+    name: 'registerFacadeAssets',
+    on: settings.registerFacadeAssets,
+}) }}
+
+{{ forms.textField({
+    label: 'Facade aspect ratio'|t('videokit'),
+    instructions: 'Fallback ratio for the poster when the provider does not report the video dimensions.'|t('videokit'),
+    id: 'facadeAspectRatio',
+    name: 'facadeAspectRatio',
+    size: 10,
+    value: settings.facadeAspectRatio,
+    errors: settings.getErrors('facadeAspectRatio'),
+}) }}
+
+{{ forms.textField({
+    label: 'Facade poster width'|t('videokit'),
+    instructions: 'Thumbnail width requested for the poster image.'|t('videokit'),
+    id: 'facadeThumbnailWidth',
+    name: 'facadeThumbnailWidth',
+    type: 'number',
+    min: 120,
+    max: 3840,
+    size: 6,
+    value: settings.facadeThumbnailWidth,
+    errors: settings.getErrors('facadeThumbnailWidth'),
+}) }}

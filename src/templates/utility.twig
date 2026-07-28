@@ -1,0 +1,50 @@
+{% import '_includes/forms.twig' as forms %}
+
+<div id="videokit-utility">
+    <p>
+        {{ 'VideoKit stores video titles, thumbnails and durations in its own table so pages never wait on a provider API. Everything here is a cache: clearing it is always safe.'|t('videokit') }}
+    </p>
+
+    <table class="data fullwidth">
+        <thead>
+            <tr>
+                <th scope="col">{{ 'Provider'|t('videokit') }}</th>
+                <th scope="col">{{ 'Status'|t('videokit') }}</th>
+                <th scope="col">{{ 'Stored videos'|t('videokit') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for provider in providers %}
+                <tr>
+                    <th scope="row">{{ provider.name }}</th>
+                    <td>
+                        {% if provider.configured %}
+                            <span class="status green"></span>{{ 'Configured'|t('videokit') }}
+                        {% else %}
+                            <span class="status"></span>{{ 'No credential set'|t('videokit') }}
+                        {% endif %}
+                    </td>
+                    <td>{{ provider.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ forms.selectField({
+        label: 'Provider'|t('videokit'),
+        instructions: 'Limit the action below to one provider.'|t('videokit'),
+        id: 'videokit-provider',
+        name: 'provider',
+        options: [{ label: 'All providers'|t('videokit'), value: '' }]|merge(
+            providers|map(p => { label: p.name, value: p.handle })
+        ),
+    }) }}
+
+    <div class="buttons">
+        <button type="button" class="btn" id="videokit-clear">{{ 'Clear cache'|t('videokit') }}</button>
+        <button type="button" class="btn" id="videokit-refresh">{{ 'Refresh metadata'|t('videokit') }}</button>
+        <div class="spinner hidden" id="videokit-spinner"></div>
+    </div>
+
+    <p class="light" id="videokit-result" aria-live="polite"></p>
+</div>

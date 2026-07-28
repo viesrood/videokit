@@ -1,0 +1,26 @@
+{# The shell only; Craft.VideoKit.Input fills in the preview and the modal. #}
+<div id="{{ id }}" class="vk-field">
+    {% if warning %}
+        <p class="warning">{{ warning }}</p>
+    {% endif %}
+
+    <div class="vk-field__row">
+        <div class="vk-field__url">
+            <input type="text"
+                   class="text fullwidth vk-field__input"
+                   inputmode="url"
+                   autocomplete="off"
+                   spellcheck="false"
+                   placeholder="{{ 'Paste a YouTube or Vimeo URL'|t('videokit') }}"
+                   value="{{ video.url ?? '' }}">
+        </div>
+
+        {% if settings.showBrowser %}
+            <button type="button" class="btn vk-field__browse">{{ 'Browse'|t('videokit') }}</button>
+        {% endif %}
+    </div>
+
+    <div class="vk-field__spinner spinner hidden"></div>
+    <div class="vk-field__error error hidden" role="alert"></div>
+    <div class="vk-field__preview{% if not settings.showPreview %} hidden{% endif %}"></div>
+</div>

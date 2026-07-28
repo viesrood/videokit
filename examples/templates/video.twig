@@ -1,0 +1,32 @@
+{#
+  Example content block: a video sized to a column width, rendered with the
+  click-to-load facade so nothing is requested from YouTube or Vimeo until the
+  visitor clicks.
+
+  Assumes a Matrix block with a `video` field (VideoKit) and an optional
+  `colWidth` dropdown. Tailwind class names are written out in full so the
+  purge step keeps them.
+#}
+{% set spanMap = {
+    '100': 'md:col-span-12',
+    '75':  'md:col-span-9',
+    '66':  'md:col-span-8',
+    '50':  'md:col-span-6',
+    '33':  'md:col-span-4',
+    '25':  'md:col-span-3',
+} %}
+{% set width = entry.colWidth ?? '100' %}
+{% set span = spanMap[width] ?? 'md:col-span-12' %}
+{% set video = entry.video %}
+
+{% if video %}
+    <div class="{{ span }}">
+        <figure class="m-0">
+            {{ videokit_facade(video, { class: 'rounded overflow-hidden' }) }}
+
+            {% if video.title %}
+                <figcaption class="mt-2 text-sm text-gray-500">{{ video.title }}</figcaption>
+            {% endif %}
+        </figure>
+    </div>
+{% endif %}

@@ -1,0 +1,196 @@
+/**
+ * VideoKit control panel styling.
+ *
+ * Colours come from Craft's own custom properties, so light and dark mode
+ * follow the control panel without a theme switch of our own.
+ */
+
+.vk-field__row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.vk-field__url {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.vk-field__error {
+    margin-top: 6px;
+}
+
+.vk-field__preview {
+    margin-top: 12px;
+}
+
+.vk-card {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 8px;
+    border: 1px solid var(--hairline-color, rgba(51, 64, 77, 0.1));
+    border-radius: var(--large-border-radius, 5px);
+    background-color: var(--white, #fff);
+}
+
+.vk-card--selectable {
+    cursor: pointer;
+}
+
+.vk-card--selectable:hover {
+    border-color: var(--link-color, #0b69a3);
+}
+
+.vk-card--selectable.sel {
+    border-color: var(--link-color, #0b69a3);
+    box-shadow: 0 0 0 1px var(--link-color, #0b69a3);
+}
+
+.vk-card__thumb {
+    position: relative;
+    flex: 0 0 auto;
+    width: 160px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--small-border-radius, 3px);
+    background-color: var(--gray-200, #e5e5e5);
+}
+
+.vk-card__thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vk-card__duration {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    padding: 1px 4px;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.vk-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    padding-top: 2px;
+}
+
+.vk-card__title {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.vk-card__meta,
+.vk-card__warning {
+    color: var(--medium-text-color, #606d7b);
+    font-size: 12px;
+}
+
+.vk-card__warning {
+    color: var(--warning-color, #cf1124);
+}
+
+.vk-card__actions {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+    padding-top: 2px;
+}
+
+/* Browse modal */
+
+.vk-modal {
+    width: 80vw;
+    max-width: 1000px;
+    height: 70vh;
+}
+
+.vk-modal .header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.vk-modal__body {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.vk-modal__sidebar {
+    display: flex;
+    flex: 0 0 220px;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 12px;
+    border-right: 1px solid var(--hairline-color, rgba(51, 64, 77, 0.1));
+    background-color: var(--gray-050, #f8f8f8);
+}
+
+.vk-modal__collection {
+    padding: 6px 8px;
+    border: 0;
+    border-radius: var(--small-border-radius, 3px);
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+}
+
+.vk-modal__collection:hover {
+    background-color: var(--gray-100, #eee);
+}
+
+.vk-modal__collection.sel {
+    background-color: var(--gray-200, #e5e5e5);
+    font-weight: 600;
+}
+
+.vk-modal__main {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.vk-modal__results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+.vk-modal__more {
+    align-self: center;
+}
+
+.vk-modal__message:empty {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .vk-modal__body {
+        flex-direction: column;
+    }
+
+    .vk-modal__sidebar {
+        flex: 0 0 auto;
+        max-height: 30%;
+        border-right: 0;
+        border-bottom: 1px solid var(--hairline-color, rgba(51, 64, 77, 0.1));
+    }
+}

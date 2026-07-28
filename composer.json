@@ -1,0 +1,67 @@
+{
+    "name": "viesrood/videokit",
+    "description": "Video field for Craft CMS 5: paste or browse YouTube and Vimeo videos, with cached metadata, Twig embed helpers and a privacy-friendly click-to-load facade.",
+    "type": "craft-plugin",
+    "license": "MIT",
+    "keywords": [
+        "craft",
+        "craftcms",
+        "craft-plugin",
+        "video",
+        "youtube",
+        "vimeo",
+        "embed",
+        "video-picker",
+        "privacy"
+    ],
+    "support": {
+        "docs": "https://github.com/viesrood/videokit/blob/main/README.md",
+        "issues": "https://github.com/viesrood/videokit/issues",
+        "source": "https://github.com/viesrood/videokit"
+    },
+    "require": {
+        "craftcms/cms": "^5.0.0",
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "viesrood\\videokit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "viesrood\\videokit\\tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.2.0"
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    },
+    "scripts": {
+        "check": [
+            "@test",
+            "@analyse"
+        ],
+        "test": "phpunit",
+        "analyse": "phpstan analyse --no-progress --memory-limit=512M"
+    },
+    "extra": {
+        "handle": "videokit",
+        "name": "VideoKit",
+        "class": "viesrood\\videokit\\Plugin",
+        "developer": "Viesrood",
+        "developerUrl": "https://viesrood.nl",
+        "documentationUrl": "https://github.com/viesrood/videokit",
+        "changelogUrl": "https://raw.githubusercontent.com/viesrood/videokit/main/CHANGELOG.md"
+    }
+}
