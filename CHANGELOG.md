@@ -1,6 +1,6 @@
 # Release Notes for VideoKit
 
-## 1.0.0 - 2026-07-28
+## 1.0.0 - 2026-07-29
 
 ### Added
 
