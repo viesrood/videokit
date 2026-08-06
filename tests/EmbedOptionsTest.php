@@ -34,17 +34,21 @@ final class EmbedOptionsTest extends TestCase
     public function testMapsVimeoOptions(): void
     {
         $params = EmbedOptions::vimeo([
+            'autopause' => false,
             'autoplay' => true,
             'title' => false,
             'byline' => false,
             'color' => '#FF8800',
+            'pictureInPicture' => false,
         ]);
 
         self::assertSame([
+            'autopause' => '0',
             'autoplay' => '1',
             'byline' => '0',
             'color' => 'ff8800',
             'dnt' => '1',
+            'pip' => '0',
             'title' => '0',
         ], $params);
     }

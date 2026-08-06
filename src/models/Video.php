@@ -28,6 +28,17 @@ use viesrood\videokit\Plugin;
  */
 class Video extends Model
 {
+    /** Iframe attributes templates may override without touching src. */
+    private const EMBED_ATTRIBUTES = [
+        'allow',
+        'allowfullscreen',
+        'class',
+        'loading',
+        'referrerpolicy',
+        'sandbox',
+        'title',
+    ];
+
     public ?string $provider = null;
 
     public ?string $videoId = null;
@@ -271,8 +282,23 @@ class Video extends Model
             'allowfullscreen' => true,
         ];
 
+        // Keep the original top-level class option for backwards compatibility.
         if (isset($options['class']) && is_string($options['class'])) {
             $attributes['class'] = $options['class'];
+        }
+
+        $customAttributes = $options['attributes'] ?? null;
+
+        if (is_array($customAttributes)) {
+            foreach (self::EMBED_ATTRIBUTES as $name) {
+                $value = $customAttributes[$name] ?? null;
+
+                if ($name === 'allowfullscreen' && is_bool($value)) {
+                    $attributes[$name] = $value;
+                } elseif (is_string($value)) {
+                    $attributes[$name] = $value;
+                }
+            }
         }
 
         return Template::raw(Html::tag('iframe', '', $attributes));

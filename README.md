@@ -304,6 +304,7 @@ inject arbitrary query parameters or iframe attributes.
 | Option | Type | YouTube | Vimeo |
 |---|---|---|---|
 | `autoplay` | bool | yes | yes |
+| `autopause` | bool | - | yes |
 | `muted` | bool | yes | yes |
 | `loop` | bool | yes | yes |
 | `controls` | bool | yes | yes |
@@ -316,6 +317,7 @@ inject arbitrary query parameters or iframe attributes.
 | `title` | bool | - | yes |
 | `byline` | bool | - | yes |
 | `portrait` | bool | - | yes |
+| `pictureInPicture` | bool | - | yes (`pip`) |
 | `color` | string (`#ff8800`) | - | yes |
 
 ```twig
@@ -324,6 +326,23 @@ inject arbitrary query parameters or iframe attributes.
     muted: true,
     controls: false,
     start: 30,
+}) }}
+```
+
+For a bare iframe, provider-neutral player options stay at the top level. Safe
+iframe overrides live under `attributes`; `src`, `style` and event handlers are never
+accepted.
+
+```twig
+{{ videokit_embed(video, {
+    autoplay: true,
+    autopause: false,
+    attributes: {
+        class: 'hero-video',
+        title: 'Main title',
+        loading: 'eager',
+        sandbox: 'allow-scripts allow-same-origin allow-presentation',
+    },
 }) }}
 ```
 

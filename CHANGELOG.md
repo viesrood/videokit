@@ -1,5 +1,13 @@
 # Release Notes for VideoKit
 
+## 1.1.0 - 2026-08-06
+
+### Added
+
+- Vimeo `autopause` and `pictureInPicture` player options.
+- An allowlisted `attributes` option for safe iframe overrides such as classes,
+  titles, loading behavior, sandbox permissions and referrer policy.
+
 ## 1.0.0 - 2026-07-29
 
 ### Added

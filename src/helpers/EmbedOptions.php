@@ -32,6 +32,7 @@ final class EmbedOptions
 
     /** Option name => Vimeo parameter name, for on/off options. */
     private const VIMEO_FLAGS = [
+        'autopause' => 'autopause',
         'autoplay' => 'autoplay',
         'byline' => 'byline',
         'controls' => 'controls',
@@ -39,6 +40,7 @@ final class EmbedOptions
         'muted' => 'muted',
         'playsinline' => 'playsinline',
         'portrait' => 'portrait',
+        'pictureInPicture' => 'pip',
         'title' => 'title',
     ];
 
