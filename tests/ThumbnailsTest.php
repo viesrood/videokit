@@ -79,6 +79,17 @@ final class ThumbnailsTest extends TestCase
         ], $withoutSize);
     }
 
+    public function testNormalizesVimeoPictureLinks(): void
+    {
+        $normalized = Thumbnails::normalize([
+            ['link' => 'https://i.vimeocdn.com/video/poster-d_1280', 'width' => 1280, 'height' => 720],
+        ]);
+
+        self::assertSame([
+            ['url' => 'https://i.vimeocdn.com/video/poster-d_1280', 'width' => 1280, 'height' => 720],
+        ], $normalized);
+    }
+
     public function testReturnsTheWidestThumbnail(): void
     {
         self::assertSame('https://example.com/max.jpg', Thumbnails::largest(self::sample()));

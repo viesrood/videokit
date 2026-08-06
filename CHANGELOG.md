@@ -1,5 +1,12 @@
 # Release Notes for VideoKit
 
+## 1.1.1 - 2026-08-06
+
+### Fixed
+
+- Vimeo `pictures.sizes` thumbnails are normalized from their `link` property,
+  so posters and responsive image candidates are stored in the metadata cache.
+
 ## 1.1.0 - 2026-08-06
 
 ### Added

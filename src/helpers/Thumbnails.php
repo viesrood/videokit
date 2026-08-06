@@ -30,7 +30,8 @@ final class Thumbnails
                 continue;
             }
 
-            $url = $thumbnail['url'] ?? null;
+            // YouTube uses `url`; Vimeo's `pictures.sizes` uses `link`.
+            $url = $thumbnail['url'] ?? $thumbnail['link'] ?? null;
 
             if (!is_string($url) || trim($url) === '') {
                 continue;
