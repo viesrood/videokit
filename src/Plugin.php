@@ -14,6 +14,7 @@ use craft\services\Utilities;
 use craft\utilities\ClearCaches;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
+use CraftCms\Cms\Twig\Twig;
 use viesrood\videokit\fields\VideoField;
 use viesrood\videokit\models\Settings;
 use viesrood\videokit\services\EmbedService;
@@ -148,13 +149,21 @@ class Plugin extends BasePlugin
     {
         // Deferred, because the extension resolves settings that are not ready
         // while plugins are still booting.
+        //
+        // Craft 6 binds Twig as a scoped service. A queue worker flushes scoped
+        // instances after every job, and the next Twig instance only has the
+        // extensions registered on that instance. So register on the current
+        // instance, and again on every instance that is resolved later.
         /** @var \craft\web\Application|\craft\console\Application $app */
         $app = Craft::$app;
 
         $app->onInit(static function (): void {
-            /** @var \craft\web\View $view */
-            $view = Craft::$app->getView();
-            $view->registerTwigExtension(new VideoKitExtension());
+            $register = static function (Twig $twig): void {
+                $twig->registerExtension(new VideoKitExtension());
+            };
+
+            $register(app(Twig::class));
+            app()->afterResolving(Twig::class, $register);
         });
     }
 

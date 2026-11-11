@@ -1,5 +1,15 @@
 # Release Notes for VideoKit
 
+## 2.0.0-beta.2 - 2026-11-11
+
+### Fixed
+
+- **The `videokit_*()` functions no longer disappear after a queue job on Craft 6.**
+  Craft 6 binds Twig as a scoped service, and Laravel's queue worker flushes scoped instances
+  after every job. The Twig extension was registered once, on the first instance, so a template
+  rendered after a job in the same process could no longer call them. The extension is now
+  registered on every Twig instance that is resolved.
+
 ## 2.0.0-beta.1 - 2026-11-11
 
 ### Changed
