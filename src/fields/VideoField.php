@@ -6,6 +6,8 @@ namespace viesrood\videokit\fields;
 
 use Craft;
 use craft\base\ElementInterface;
+use CraftCms\Cms\Element\Contracts\ElementInterface as Craft6ElementInterface;
+use CraftCms\Cms\Image\Enums\ImageTransformMode;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
 use craft\base\ThumbableFieldInterface;
@@ -163,7 +165,12 @@ class VideoField extends Field implements PreviewableFieldInterface, ThumbableFi
         return Html::encode($value->title ?? (string)$value->url);
     }
 
-    public function getThumbHtml(mixed $value, ElementInterface $element, int $size): ?string
+    public function getThumbHtml(
+        mixed $value,
+        Craft6ElementInterface $element,
+        int $size,
+        ImageTransformMode $mode = ImageTransformMode::Fit,
+    ): ?string
     {
         if (!$value instanceof Video) {
             return null;

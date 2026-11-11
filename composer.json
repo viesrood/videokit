@@ -20,8 +20,9 @@
         "source": "https://github.com/viesrood/videokit"
     },
     "require": {
-        "craftcms/cms": "^5.0.0",
-        "php": ">=8.2"
+        "php": "^8.5",
+        "craftcms/cms": "^6.0.0-beta.1",
+        "craftcms/yii2-adapter": "^6.0.0-beta.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.0",
@@ -40,7 +41,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "8.2.0"
+            "php": "8.5.0"
         },
         "allow-plugins": {
             "yiisoft/yii2-composer": true,
@@ -63,5 +64,7 @@
         "developerUrl": "https://viesrood.nl",
         "documentationUrl": "https://github.com/viesrood/videokit",
         "changelogUrl": "https://raw.githubusercontent.com/viesrood/videokit/main/CHANGELOG.md"
-    }
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true
 }

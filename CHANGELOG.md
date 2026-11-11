@@ -1,5 +1,15 @@
 # Release Notes for VideoKit
 
+## 2.0.0-beta.1 - 2026-11-11
+
+### Changed
+
+- **Requires Craft CMS 6.0.0-beta.1 or later and PHP 8.5.** The plugin runs as a legacy plugin
+  through `craftcms/yii2-adapter`, which it now requires. It is not yet rewritten for Craft 6's
+  Laravel base classes.
+- `VideoField::getThumbHtml()` takes Craft 6's element interface and an optional
+  `ImageTransformMode`, as `ThumbableFieldInterface` now requires.
+
 ## 1.0.0 - 2026-07-29
 
 ### Added
